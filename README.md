@@ -1,5 +1,29 @@
 # Preparation for the Neo4j certification
 
+To use the Neo4j inbuilt datasets on Neo4j Desktop, create new Project and then add Remote Connection.
+Lets assume we want to access the movies database.
+
+Name Movies
+Connect URL: neo4j+s://demo.neo4jlabs.com
+Username: movies
+Password: movies
+
+Click on save changes and connect. Then open in Neo4j browser to start running queries.
+
+To add any other dataset, e.g. recommendations - follow the same procedure and username/password
+will be the same as dataset name i.e. recommendations in this case
+
+If you are installing a local graph DBMS, make sure to select the latest Neo4j version (4.4.10) from the 
+dropdown  to be able to access the install the latest versions of the plugins discussed in the next section.
+You will need to set your own password and manually load csv data into database as demostrated in the docs 
+https://neo4j.com/developer/desktop-csv-import/
+
+### Plugins
+
+To install the various plugins like Graph Data Science Library or APOC, navigate to the plugins tab of the database
+in Neo4j desktop as shown in the docs https://neo4j.com/docs/graph-data-science/current/installation/neo4j-desktop/
+
+### Graph Basics
 
 A directed relationship is non-symmetrical. It goes from a source node to a target node. 
 This type of relationship may contain additional qualifying properties, for example a 

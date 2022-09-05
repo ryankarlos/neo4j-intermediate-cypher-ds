@@ -1,3 +1,5 @@
+// These examples use the Neo4j recommendations dataset
+
 // Create a native graph projection representing Users rating
 // Movies and ensure the RATED relationship is undirected.
 // The returns a single value from the procedure call, relationshipCount,

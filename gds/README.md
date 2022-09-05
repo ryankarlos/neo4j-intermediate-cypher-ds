@@ -8,8 +8,6 @@ The graph catalog is a concept that allows you to manage graph projections in GD
 * exporting graph projections
 * writing graph projection properties back to the database
 
-
-
 In the recommendations graph, we can create a projection from the Actor and Movie nodes and the ACTED_IN relationship 
 with the below command.
 

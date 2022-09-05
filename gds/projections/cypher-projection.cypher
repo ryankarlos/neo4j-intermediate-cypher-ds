@@ -1,4 +1,7 @@
 
+// These examples use the Neo4j recommendations dataset
+
+
 // Create a cypher projection representing all User nodes that have rated a
 // Movie with a release year greater than 2014. Only include RATED relationships
 // with ratings greater than or equal to 4 stars.
