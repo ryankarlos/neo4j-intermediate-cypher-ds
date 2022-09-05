@@ -1,13 +1,14 @@
 
 /// These examples use the Neo4j movies dataset
-// count the number of movies each actor has acted in.
+// find the people who have directed the most movies
 // First create the graph projection.
-CALL gds.graph.project('proj', ['Actor','Movie'], 'ACTED_IN');
+CALL gds.graph.project('movies', ['Person','Movie'], 'DIRECTED');
 // Then stream the degree centrality.
-CALL gds.degree.stream('proj')
+CALL gds.degree.stream('movies')
 YIELD nodeId, score
-RETURN gds.util.asNode(nodeId).name AS actorName, score AS numberOfMoviesActedIn
-ORDER BY numberOfMoviesActedIn DESCENDING, actorName LIMIT 5
+RETURN gds.util.asNode(nodeId).name AS director, toInteger(score) AS numberOfMoviesDirected
+ORDER BY numberOfMoviesDirected DESC
+LIMIT 5
 
 // ---------------------------------------------------------------------------------
 
