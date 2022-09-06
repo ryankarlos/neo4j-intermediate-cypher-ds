@@ -210,6 +210,7 @@ WHERE p.name = 'Clint Eastwood'
 AND exists {(p)-[:DIRECTED]->(m)}
 RETURN m.title
 ```
+<img src="https://github.com/ryankarlos/neo4j-intermediate-cypher-ds/blob/master/screenshots/profile-non-optimal.svg">
 
 In the profile, you can see that the initial row is retrieved, but then rows are retrieved for each Movie 
 that Clint Eastwood acted in. Then the test is done for the :DIRECTED relationship.
@@ -220,6 +221,9 @@ PROFILE MATCH (p:Person)-[:ACTED_IN]->(m:Movie)<-[:DIRECTED]-(p)
 WHERE  p.name = 'Clint Eastwood'
 RETURN m.title
 ```
+
+<img src="https://github.com/ryankarlos/neo4j-intermediate-cypher-ds/blob/master/screenshots/profile-optimal.svg">
+
 
 The query retrieves the anchor (the Clint Eastwood Person node). It then finds a Movie node where Clint Eastwood is related to with
 the ACTED_IN relationship. It then traverses all DIRECTED relationships that point to the same Clint Eastwood node.
