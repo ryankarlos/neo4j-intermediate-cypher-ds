@@ -23,6 +23,15 @@ https://neo4j.com/developer/desktop-csv-import/
 To install the various plugins like Graph Data Science Library or APOC, navigate to the plugins tab of the database
 in Neo4j desktop as shown in the docs https://neo4j.com/docs/graph-data-science/current/installation/neo4j-desktop/
 
+### Installing Python driver
+
+To access neo4j database from applications in python, we need to install the python neo4j driver
+to carry out CRUD operations as explained in the [docs](https://neo4j.com/developer/python/ )
+
+``
+pip install neo4j
+``
+
 ### Graph Basics
 
 A directed relationship is non-symmetrical. It goes from a source node to a target node. 
