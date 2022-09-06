@@ -1,3 +1,11 @@
+
+// find the number of (:Person) nodes who have a [:DIRECTED] relationship to the Cloud Atlas (:Movie) node.
+// 3
+
+MATCH (m:Movie {title: 'Cloud Atlas'})<-[:DIRECTED]-(p:Person)
+RETURN count(p)
+
+
 // ---------------- Testing equality ------------------------
 
 // Write and execute a query to return the names of directors of horror movies released in the year 2000.
@@ -115,3 +123,45 @@ CASE WHEN m.runtime < 120 THEN "Short"
 ELSE "Long"
 END AS  runTime
 ORDER BY runTime DESC
+
+
+/// --------------------------------------- Creating, Updating and Deleting Nodes, Relationships, Properties -------------------
+
+// Create a new Person node for actor named Daniel Kaluuya.
+
+MERGE (p:Person {name:"Daniel Kaluuya"})
+RETURN p
+
+// Find the Person node for Daniel Kaluuya.
+// Create the Movie node, Get Out.
+// Add the ACTED_IN relationship between Daniel Kaluuya and the movie, Get Out.
+
+MATCH (p:Person {name:"Daniel Kaluuya"})
+MERGE (n:Movie {title: "Get Out"})
+MERGE (p)-[:ACTED_IN]-(n)
+
+
+// add the tagline and released properties for the node you just created above. Set tagline to 'Gripping, scary, witty and timely!'
+ and released property value to 2017
+
+MATCH (m:Movie {title: 'Get Out'})
+SET m.tagline ="Gripping, scary, witty and timely!", m.released = 2017
+RETURN m.title, m.tagline, m.released
+
+// use MERGE processing for the Movie node with the title Rocketman.
+// If the node already exists (ON MATCH SET clause):Set the matchedAt property for the node referenced by m to datetime().
+// If the node does not exist (ON CREATE SET clause): Set the createdAt property to datetime().
+// For either case: Set the updatedAt property to datetime().
+// Execute your code twice to ensure that the the MERGE processing occurs. That is, the newly created node will have a
+// createdAt property and the updated node will have a matchedAt property. In both cases, the node will have the updatedAt property set.
+
+MERGE (m:Movie {title: 'Rocketman'})
+ON MATCH SET m.matchedAt = datetime()
+ON CREATE SET m.createdAt = datetime()
+SET  m.updatedAt=datetime()
+RETURN m
+
+// Write the code to delete the person node corresponding to  "Emil Eifrem" which was incorrectly included in the graph.
+
+MATCH (p:Person {name: "Emil Eifrem"})
+DETACH DELETE p
