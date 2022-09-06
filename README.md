@@ -1,5 +1,23 @@
 # Preparation for the Neo4j certification
 
+
+This repository contains all the material copied over from the free [Neo4j Graph Academy courses](https://graphacademy.neo4j.com/)
+ in preparation for the [Neo4j Certified Professional Certification](https://graphacademy.neo4j.com/courses/neo4j-certification/)
+and [Neo4j Graph Data Science Certificaiton](https://graphacademy.neo4j.com/courses/gds-certification/)
+
+The following list of course materials have been included in this repository 
+
+1. [Neo4j Fundamentals](https://graphacademy.neo4j.com/courses/neo4j-fundamentals/)
+2. [Cypher Fundamentals](https://graphacademy.neo4j.com/courses/cypher-fundamentals/)
+3. [Intermediate Cypher Queries](https://graphacademy.neo4j.com/courses/cypher-intermediate-queries/)
+4. [Introduction to Neo4j Graph Data Science](https://graphacademy.neo4j.com/courses/gds-product-introduction/)
+5. [Neo4j Graph Data Science Fundamentals](https://graphacademy.neo4j.com/courses/graph-data-science-fundamentals/) 
+6. [Importing CSV Data into Neo4j](https://graphacademy.neo4j.com/courses/importing-data/) #TODO
+7. [Graph Data Modelling Fundamentals](https://graphacademy.neo4j.com/courses/modeling-fundamentals/) #TODO 
+8. [Building Neo4j Applications with Python](https://graphacademy.neo4j.com/courses/app-python/) #TODO
+
+## Setup
+
 To use the Neo4j inbuilt datasets on Neo4j Desktop, create new Project and then add Remote Connection.
 Lets assume we want to access the movies database.
 
