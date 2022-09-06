@@ -54,14 +54,16 @@ pip install neo4j
 
 ### Graph Basics
 
+Nodes are the entities in the graph which can be tagged with labels, representing their different roles in your domain.
+They can hold any number of key-value pairs, or properties. Labels may also attach metadata such as index or constraint 
+information to nodes.
 A directed relationship is non-symmetrical. It goes from a source node to a target node. 
 This type of relationship may contain additional qualifying properties, for example a 
-weighting or strength indicator.
+weighting or strength indicator. An undirected relationship is symmetric with no directional character,
+it is simply between two nodes instead of having a source and target.
+Every relationship in the neo4j database is directed by design, have a type also can have properties like nodes.
+Nodes can have any number or type of relationships. https://neo4j.com/developer/graph-database/
 
-An undirected relationship is symmetric with no directional character, it is simply between 
-two nodes instead of having a source and target.
-
-Every relationship in the neo4j database is directed by design. ]
 
 ```
 CALL db.schema.visualization()
