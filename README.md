@@ -1,9 +1,11 @@
 # Preparation for the Neo4j certification
 
-
 This repository contains all the material copied over from the free [Neo4j Graph Academy courses](https://graphacademy.neo4j.com/)
  in preparation for the [Neo4j Certified Professional Certification](https://graphacademy.neo4j.com/courses/neo4j-certification/)
 and [Neo4j Graph Data Science Certificaiton](https://graphacademy.neo4j.com/courses/gds-certification/)
+
+Some of the examples also use refences from the Neo4j [Cypher](https://neo4j.com/docs/cypher-manual/current/) and 
+[GDS](https://neo4j.com/docs/graph-data-science/current/) docs.
 
 The following list of course materials have been included in this repository 
 
@@ -65,4 +67,4 @@ Every relationship in the neo4j database is directed by design. ]
 CALL db.schema.visualization()
 ```
 
-<img src="screenshots/movies-db-schema.png'>
+<img src="screenshots/movies-db-schema.png'/>
