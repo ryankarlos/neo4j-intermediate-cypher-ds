@@ -67,4 +67,4 @@ Every relationship in the neo4j database is directed by design. ]
 CALL db.schema.visualization()
 ```
 
-<img src="screenshots/movies-db-schema.png'/>
+<img src="screenshots/movies-db-schema.png">
