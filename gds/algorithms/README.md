@@ -172,3 +172,40 @@ returned per node. With node similarity there is also the capability to limit th
 to just a per node basis.
 
 
+## Community Detection 
+
+Community detection algorithms are used to evaluate how groups of nodes may be clustered or partitioned in the graph.
+Much of the community detection functionality in GDS is focused on distinguishing and assigning ids to these node groups 
+for downstream analytics, visualization, or other processing.
+
+Common use cases of community detection include:
+
+* Fraud detection: Finding fraud rings by identifying accounts that have frequent suspicious transactions and/or 
+* share identifiers between one another.
+* Customer 360: Disambiguating multiple records and interactions into a single customer profile so an organization has 
+* an aggregated source of truth for each customer.
+* Market segmentation: dividing a target market into approachable subgroups based on priorities, behaviors, interests, 
+* and other criteria.
+
+A common community detection algorithm is Louvain. Louvain maximizes a modularity score for each community, where the 
+modularity quantifies the quality of an assignment of nodes to communities. This means evaluating how much more densely 
+connected the nodes within a community are, compared to how connected they would be in a random network.
+Louvain optimizes this modularity with a hierarchical clustering approach that recursively merges communities together. 
+There are multiple parameters that can be used to tune Louvain to control its performance and the number and size of 
+communities produced. This includes the maximum number of iterations and hierarchical levels to use as well as the 
+tolerance parameter for assessing convergence/stopping conditions.
+An additional important consideration is that Louvain is a stochastic algorithm. As such, the community assignments 
+may change a bit when re-run. When the graph does not have a naturally well-defined community structure the changes 
+between runs can become more significant. Louvain includes a seedProperty parameter which can be used to assign initial
+community ids and help with consistency between runs. Also, if consistency is important for your use case, other 
+community detection algorithms, such as Weakly Connected Components (WCC), take a more deterministic partitioning
+approach to assigning communities and thus will not change between runs.
+
+Below are some other production tier community detection algorithms. 
+
+1. **Label Propagation** Similar intent as Louvain. Fast algorithm that parallelizes well. Great for large graphs.
+2. **Weakly Connected Components (WCC)** Partitions the graph into sets of connected nodes such that:
+   * Every node is reachable from any other node in the same set
+   * No path exists between nodes from different sets
+3. **Triangle Count** Counts the number of triangles for each node. Can be used to detect the cohesiveness of communities and stability of the graph.
+4. **Local Clustering Coefficient** Computes the local clustering coefficient for each node in the graph which is an indicator for how the node clusters with its neighbors.
