@@ -134,3 +134,25 @@ CALL apoc.merge.relationship(n,
   {}
 ) YIELD rel
 RETURN count(*) AS `Number of relationships merged`
+
+
+// ---------------- intermediate nodes ------------------
+
+// We want to infer more from the roles that an actor played in a movie.
+// The same role could be repeated in multiple movies. Furthermore, we might want
+// to add how different roles interact with each other in the same movie or between movies.
+
+
+// Find an actor that acted in a Movie (MATCH (a:Actor)-[r:ACTED_IN]→(m:Movie))
+// Create (using MERGE) a Role node setting it’s name to the role in the ACTED_IN relationship.
+// Create (using MERGE) the PLAYED relationship between the Actor and the Role nodes.
+// Create (using MERGE) the IN_MOVIE relationship between the Role and the Movie nodes.
+
+// Your code should create 5 nodes and 10 relationships.
+
+
+MATCH (a:Actor)-[r:ACTED_IN]->(m:Movie)
+MERGE (p:ROLE {name:r.role})
+MERGE (a)-[:PLAYED]->(p)-[:IN_MOVIE]->(m)
+RETURN a, p, m
+

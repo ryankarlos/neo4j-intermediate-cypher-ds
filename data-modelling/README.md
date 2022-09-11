@@ -89,6 +89,34 @@ Here are the properties we will define for the Person nodes:
 
 **Note**: The died property will be optional.
 
+
+### Intermediate Nodes
+
+
+You sometimes find cases where you need to connect more data to a relationship than can be fully
+captured in the properties. In other words, you want a relationship that connects more than two nodes.
+Mathematics allows this, with the concept of a hyperedge. This is impossible in Neo4j, but a solution 
+is to create intermediate nodes. You create intermediate nodes when you need to:
+
+* **Connect more than two nodes in a single context**
+* **Relate something to a relationship**
+* **Share data in the graph between entities**: In many cases relationships can share data which enables your graph to 
+  contain less duplicate data. Intermediate nodes also allow you to deduplicate information. 
+
+These three use cases are used to make the graphs relationships more meaningful and sharable 
+between nodes.
+
+Consider an instance model where we have a Person and Company Nodes and a  `WORKS_AT` hyperedge that has 
+the from and to properties (dates array where each value is string representing range, array of roles) and 
+we need to associate the role with this period of work. In Neo4j, there is no way to create a 
+relationship that connects a relationship to a third node. Neo4j relationships can only connect two nodes.
+The solution is to replace the hyperedge with a connection point node. Since nodes are connection points, you simply
+create a node in the middle of the hyperedge. In this example, we replace the WORKS_AT hyperedge 
+with an Employment intermediate node. This provides a connection point that allows us to connect 
+any amount of information to a Person's term of employment at a Company. In addition, Person nodes 
+can have a shared Role or Company, and allow us to very easily trace either the full details of a 
+single person’s career, or the overlap between different individuals.
+
 ## Modelling Relationships
 
 Connections are the verbs in your use cases e.g. `What ingredients are used in a recipe?` or  `Who is married to this person?`
@@ -197,8 +225,75 @@ performance of the queries when the graph grows.
 
 ## Refactoring
 
+Refactoring is the process of changing the data model and the graph.  There are three reasons why you would refactor:
 
+1. The graph as modeled does not answer all of the use cases.
+2. A new use case has come up that you must account for in your data model.
+3. The Cypher for the use cases does not perform optimally, especially when the graph scales
+
+To refactor a graph data model and a graph, you must:
+
+* Design the new data model.
+* Write Cypher code to transform the existing graph to implement the new data model.
+* Retest all use cases, possibly with updated Cypher code.
+
+Node labels serve as an anchor point for a query. By specifying a label, we are specifying a subset 
+of one or more nodes with which to start a query. Using a label helps to reduce the amount of data that is retrieved.
+Your goal in modeling should be to reduce the size of the graph that is touched by a query. In Cypher, you can produce
+a query plan that shows what operations occur during the query. 
+
+You should use labels wisely in your data model. They should be used if it will help with most of your use cases.  
+A best practice is to limit the number of labels for a node to 4. If the use of a property for a node will suffice, 
+then it is best to not have the label.
+
+### Retesting after refactoring 
+
+After you have refactored the graph, you should revisit all queries for your use cases. You should first determine
+if any of the queries need to be rewritten to take advantage of the refactoring. Next, we rewrite some of our 
+queries to take advantage of the refactoring. During your testing on your real application and especially with a
+fully-scaled graph, you can also profile the new queries to see if it improves performance. On the small instance 
+model we are using, you will not see significant improvements, but you may see differences in the number of 
+rows retrieved.
+If you have a scaled graph (with many nodes/relationships), you should also use the PROFILE keyword to compare
+the performance of the queries after the refactoring.
+
+### Avoid these labels 
+
+You want to avoid labeling your nodes to represent hierarchies. This is often called “inheritance” or “IS-A” relationships.
+You should not do this where nodes have multiple labels that represent a hierarchy
+You should also avoid semantically orthogonal labels. “Semantically orthogonal” is a fancy term that means that 
+labels should have nothing to do with one another. You should be careful not to use the same type of label 
+in different contexts. For example, using the region for all types of nodes is not useful for most queries.
 
 ## Eliminate Duplicate data
 
+You should take care to avoid duplicating data in your graph. Where some databases require a form of denormalization 
+to improve the speed of a set of queries, this is not always the case with a graph database. De-duplicating data
+gives you the added benefit of allowing you to query through a node - for example, finding other customers 
+who have purchased a particular product, or finding similar movies based on the rating of other users.
+
+In addition, duplicating data in the graph increases the size of the graph and the amount of data that may need to
+be retrieved for a query. A solution here is to model properties as nodes.
+
+
+### nodes with complex data
+
+Since nodes are used to store data about specific entities, you may have initially modeled, for example,
+a Production node to contain the details of the address for the production company.
+
+Storing complex data in the nodes like this may not be beneficial for a couple of reasons:
+
+1. Duplicate data. Many nodes may have production companies in a particular location and the data is 
+   repeated in many nodes.
+
+2. Queries related to the information in the nodes require that all nodes be retrieved.
+
+If there is a high amount of duplicate data in the nodes or if key questions of your use cases would perform 
+better if all nodes need not be retrieved to get at the complex data, then you might consider refactoring 
+the graph as shown here.
+
+In this refactoring, if there are queries that need to filter production companies by their state, 
+then it will be faster to query based upon the State.name value, rather than evaluating all of the 
+state properties for the Production nodes.
+How you refactor your graph to handle complex data will depend upon the performance of the queries when your graph scales.
 
